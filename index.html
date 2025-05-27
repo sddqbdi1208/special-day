@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Special Day for You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Great Vibes', cursive;
+      background: linear-gradient(to bottom right, #fff0f5, #ffe6f0);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 4em;
+      color: #d63384;
+      margin: 0;
+      animation: bounceIn 1.5s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    .heart-balloons {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      background: url('balon1.png') no-repeat center center / contain;
+      animation: floatBalloons 8s infinite ease-in-out;
+    }
+
+    @keyframes floatBalloons {
+      0% { transform: translateY(100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+
+    .next-button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.3em;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+      transition: transform 0.3s;
+    }
+
+    .next-button:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 105, 180, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart-balloons">
+    <!-- Generate many balloons with random positions -->
+    <script>
+      for (let i = 0; i < 30; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.animationDuration = (6 + Math.random() * 4) + 's';
+        balloon.style.animationDelay = Math.random() * 5 + 's';
+        document.querySelector('.heart-balloons').appendChild(balloon);
+      }
+    </script>
+  </div>
+  <h1>Happy Birthday</h1>
+  <button class="next-button" onclick="scrollToNext()">Lanjut ➡️</button>
+
+  <script>
+    function scrollToNext() {
+      alert('Menuju halaman berikutnya (belum dihubungkan)');
+    }
+  </script>
+</body>
+</html>
