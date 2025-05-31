@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday</title>
-  <link href="https://fonts.googleapis.com/css2?family=More+Sugar&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=More+Sugar&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -16,77 +16,85 @@
       overflow: hidden;
       background-color: #fff0f5;
       font-family: 'More Sugar', cursive;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
     }
 
+    /* BALLOON ANIMATION */
     .balloon {
       position: absolute;
+      bottom: -60px; /* mulai dari bawah layar */
       width: 60px;
-      animation: float 10s linear infinite;
+      animation-name: floatBalloon;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
       opacity: 0;
       pointer-events: none;
+      user-select: none;
     }
 
-    @keyframes float {
+    @keyframes floatBalloon {
       0% {
-        transform: translateY(100vh) scale(1);
+        transform: translateY(0) scale(1);
         opacity: 1;
       }
       80% {
         opacity: 1;
       }
       100% {
-        transform: translateY(-200px) scale(1.1);
+        transform: translateY(-120vh) scale(1.1);
         opacity: 0;
       }
     }
 
-    .title {
+    /* FLOAT AREA (GAMBAR HBD) */
+    .float-area {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 48px;
-      color: #ff69b4;
-      text-align: center;
-      font-family: 'More Sugar', cursive;
-      animation: popUp 1s ease-out forwards, floatTitle 5s ease-in-out infinite;
-      will-change: transform;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none; /* supaya tidak ganggu klik */
+      z-index: 10; /* agar di atas balon */
     }
 
-    @keyframes popUp {
+    .floating-img {
+      width: 150px;
+      max-width: 80vw;
+      height: auto;
+      animation: floater 3s ease-in-out infinite;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes floater {
       0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-
-    @keyframes floatTitle {
-      0%, 100% {
-        transform: translate(-50%, -50%) translateY(0px);
-      }
-      25% {
-        transform: translate(-50%, -50%) translateY(-10px);
+        transform: translateY(-10%);
       }
       50% {
-        transform: translate(-50%, -50%) translateY(10px);
+        transform: translateY(10%);
       }
-      75% {
-        transform: translate(-50%, -50%) translateY(-5px);
+      100% {
+        transform: translateY(-10%);
       }
     }
 
+    /* TEXT BOX BUTTON */
     .text-box {
       position: fixed;
       bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
+      z-index: 15;
+      pointer-events: auto; /* supaya tombol bisa diklik */
     }
 
+    /* BUTTON STYLE */
     .btn:link,
     .btn:visited {
       text-transform: uppercase;
@@ -94,10 +102,13 @@
       padding: 10px 25px;
       display: inline-block;
       border-radius: 100px;
-      transition: all .2s;
-      position: relative;
+      transition: all 0.2s;
       font-size: 14px;
       font-family: 'More Sugar', cursive;
+      color: #777;
+      background-color: #fff;
+      position: relative;
+      z-index: 20;
     }
 
     .btn:hover {
@@ -110,11 +121,6 @@
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .btn-white {
-      background-color: #fff;
-      color: #777;
-    }
-
     .btn::after {
       content: "";
       display: inline-block;
@@ -125,11 +131,8 @@
       top: 0;
       left: 0;
       z-index: -1;
-      transition: all .4s;
-    }
-
-    .btn-white::after {
       background-color: #fff;
+      transition: all 0.4s;
     }
 
     .btn:hover::after {
@@ -153,10 +156,10 @@
       }
     }
 
-    /* Responsiveness */
+    /* RESPONSIVE */
     @media screen and (max-width: 768px) {
-      .title {
-        font-size: 36px;
+      .floating-img {
+        width: 120px;
       }
       .btn {
         font-size: 12px;
@@ -165,8 +168,8 @@
     }
 
     @media screen and (max-width: 480px) {
-      .title {
-        font-size: 28px;
+      .floating-img {
+        width: 90px;
       }
       .btn {
         font-size: 11px;
@@ -176,13 +179,18 @@
   </style>
 </head>
 <body>
-  <div class="title">Happy<br>Birthday</div>
+  <!-- FLOATING HBD IMAGE -->
+  <div class="float-area">
+    <img src="your_hbd_image.png" alt="Happy Birthday" class="floating-img" />
+  </div>
+
+  <!-- BUTTON -->
   <div class="text-box">
-    <a href="nextpage.html" class="btn btn-white btn-animated">Click Me</a>
+    <a href="nextpage.html" class="btn btn-animated">Click Me</a>
   </div>
 
   <script>
-    const balloonSrc = 'balondepan.png'; // Pastikan file ini tersedia
+    const balloonSrc = 'balondepan.png'; // Pastikan file balon tersedia
 
     function createBalloon() {
       const balloon = document.createElement('img');
@@ -191,6 +199,8 @@
       balloon.style.left = Math.random() * window.innerWidth + 'px';
       balloon.style.animationDuration = (8 + Math.random() * 5) + 's';
       balloon.style.width = (40 + Math.random() * 30) + 'px';
+      balloon.style.opacity = '1';
+
       document.body.appendChild(balloon);
 
       setTimeout(() => {
